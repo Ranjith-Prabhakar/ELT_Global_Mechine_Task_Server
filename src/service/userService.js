@@ -1,0 +1,19 @@
+const UserRepository = require("../db/repository/userRepository");
+
+class UserService {
+  constructor() {
+    this.repository = new UserRepository();
+  }
+
+  async SignUp({ name, email, password }) {
+    try {
+      console.log("service", name, email, password)
+      const response = await this.repository.SignUp({ name, email, password })
+      return response
+    } catch (error) {
+
+    }
+  }
+}
+
+module.exports = UserService
