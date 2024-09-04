@@ -15,7 +15,7 @@ class UserService {
 
       return response
     } catch (error) {
-
+      console.log(error.message)
     }
   }
 
@@ -27,7 +27,17 @@ class UserService {
       console.log("Login", response)
       return response
     } catch (error) {
+      console.log(error.message)
+    }
+  }
 
+  async CreateEvent(data) {
+    try {
+      const response = await this.repository.CreateEvent(data)
+      console.log("CreateEvent", response)
+      return response
+    } catch (error) {
+      console.log(error.message)
     }
   }
 }
