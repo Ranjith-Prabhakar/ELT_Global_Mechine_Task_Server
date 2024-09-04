@@ -18,9 +18,9 @@ module.exports = (app) => {
     try {
       const { email, password } = req.body;
 
-      const { data } = await service.SignIn({ email, password });
+      const data  = await service.Login({ email, password });
 
-      return res.json(data);
+      return res.status(data.status).json(data)
     } catch (err) {
       next(err);
     }

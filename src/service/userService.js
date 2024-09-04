@@ -14,6 +14,15 @@ class UserService {
 
     }
   }
+
+  async Login({ email, password }){
+    try {
+      const response = await this.repository.Login({email, password })
+      return response
+    } catch (error) {
+      
+    }
+  }
 }
 
 module.exports = UserService
