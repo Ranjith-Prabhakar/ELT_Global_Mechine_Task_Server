@@ -44,20 +44,6 @@ class UserRepository {
     }
   }
 
-  async CreateEvent(data) {
-    try {
-      let result = await eventModel.create(data)
-      await result.save()
-      if (result) {
-        return { status: 200, message: "event created successfully" }
-      } else {
-        return { status: 500, message: "something went wrong, please try again" }
-      }
-
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
 }
 
 

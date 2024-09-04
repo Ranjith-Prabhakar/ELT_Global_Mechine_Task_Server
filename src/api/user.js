@@ -39,4 +39,18 @@ module.exports = (app) => {
       next(err);
     }
   });
+
+  app.post("/fetchEvents", isAuth, async (req, res, next) => {
+    try {
+      console.log("inside fetchEvent")
+      const data = await service.GetEvents(req.body);
+
+      console.log("fetchEvents-user  ",data)
+      return res.status(data.status).json(data)
+    } catch (err) {
+      next(err);
+    }
+  });
+
+
 };
