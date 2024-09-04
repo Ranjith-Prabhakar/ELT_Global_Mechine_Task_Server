@@ -5,9 +5,10 @@ module.exports = (app) => {
 
   app.post("/signup", async (req, res, next) => {
     try {
-      const { name, email, password } = req.body;
+      console.log("signup",req.body)
+      const { name, email, password, selectedRole } = req.body;
       console.log(name, email, password)
-      const data  = await service.SignUp({ name, email, password });
+      const data = await service.SignUp({ name, email, password, selectedRole });
       return res.status(data.status).json(data);
     } catch (err) {
       next(err);
