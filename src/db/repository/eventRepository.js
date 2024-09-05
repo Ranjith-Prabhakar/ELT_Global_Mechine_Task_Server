@@ -20,11 +20,11 @@ class EventRepository {
   async GetEvents(data, userId) {
     try {
 
-      let { rowCount, pageCount, total, bookedOnlyEvents } = data
+      let { rowCount, pageCount, total, bookedOnly } = data
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
       let start = (parseInt(pageCount) - 1) * parseInt(rowCount);
-      if (bookedOnlyEvents > 0) {
+      if (bookedOnly) {
         let result = await userModel
           .findOne({ _id: userId })
           .populate({
@@ -59,15 +59,17 @@ class EventRepository {
 
 
         if (paginatedEvents) {
-          return { status: 200, message: "event created successfully", data: paginatedEvents, total }
+          return { status: 200, message: "event fetched successfully", data: paginatedEvents, total }
         } else {
           return { status: 500, message: "something went wrong, please try again" }
         }
       } else {
-        if (total === "0") {
-          total = await eventModel.find({
+        if (total === 0) {
+          let count = await eventModel.find({
             date: { $gte: sevenDaysAgo }
           }).countDocuments();
+          console.log("count", count)
+          total = count
         }
 
 

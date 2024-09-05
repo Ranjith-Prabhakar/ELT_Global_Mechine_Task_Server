@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 exports.createToken = function (payload, secret) {
   try {
-    const token = jwt.sign({ id: payload }, secret, { expiresIn: '2h' });
+    const token = jwt.sign({ id: payload }, secret, { expiresIn: '24h' });
     console.log("Generated Token:", token);
     return token;
   } catch (error) {

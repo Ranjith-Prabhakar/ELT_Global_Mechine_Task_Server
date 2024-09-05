@@ -28,8 +28,8 @@ module.exports = (app) => {
 
   app.post("/createEvent", isAuth, async (req, res, next) => {
     try {
-      const { courseName, date } = req.body;
-      const data = await service.CreateEvent({ courseName, date, instructor: req.user._id });
+      const { courseName, date,time } = req.body;
+      const data = await service.CreateEvent({ courseName, date, time, instructor: req.user._id });
 
       return res.status(data.status).json(data)
     } catch (err) {
