@@ -4,7 +4,6 @@ const userModel = require("../model/user")
 class UserRepository {
   async SignUp(data) {
     try {
-      console.log("data repo", data)
       const { email } = data
       const isExist = await userModel.findOne({ email })
       if (isExist) {
@@ -43,6 +42,26 @@ class UserRepository {
       console.log(error.message)
     }
   }
+
+  async  AddBookedEvents(courseId, userId) {
+  try {
+    let updatedUser = await userModel.findOneAndUpdate(
+      { _id: userId },
+      { $addToSet: { bookedEvents: courseId } },
+      { new: true } 
+    );
+
+    if (updatedUser) {
+      return { status: 201, message: "Event has been added", data: updatedUser };
+    } else {
+      return { status: 400, message: "User not found or event already booked" };
+    }
+  } catch (error) {
+    console.log(error.message);
+    return { status: 500, message: "An error occurred" };
+  }
+}
+
 
 }
 

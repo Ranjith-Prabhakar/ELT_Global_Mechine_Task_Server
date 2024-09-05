@@ -12,9 +12,7 @@ class UserService {
 
   async SignUp({ name, email, password, selectedRole }) {
     try {
-      console.log("service", name, email, password)
       const response = await this.usetRepository.SignUp({ name, email, password, selectedRole })
-
       return response
     } catch (error) {
       console.log(error.message)
@@ -26,7 +24,6 @@ class UserService {
       const response = await this.usetRepository.Login({ email, password })
       const token = createToken(response.user._id.toString(), process.env.JWT_SECRET)
       response.token = token
-      console.log("Login", response)
       return response
     } catch (error) {
       console.log(error.message)
@@ -36,22 +33,32 @@ class UserService {
   async CreateEvent(data) {
     try {
       const response = await this.eventRepository.CreateEvent(data)
-      console.log("CreateEvent", response)
       return response
     } catch (error) {
       console.log(error.message)
     }
   }
 
-  async GetEvents(data) {
+  async GetEvents(data, userId) {
     try {
-      const response = await this.eventRepository.GetEvents(data)
-      console.log("GetEvents- service", response)
+      console.log("/GetEvents ser", data, userId)
+      const response = await this.eventRepository.GetEvents(data, userId)
       return response
     } catch (error) {
       console.log(error.message)
     }
   }
+
+  async AddBookedEvents(courseId, userId) {
+    try {
+      const response = await this.usetRepository.AddBookedEvents(courseId, userId)
+      return response
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+
 }
 
 module.exports = UserService

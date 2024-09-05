@@ -6,9 +6,7 @@ module.exports = (app) => {
 
   app.post("/signup", async (req, res, next) => {
     try {
-      console.log("signup", req.body)
       const { name, email, password, selectedRole } = req.body;
-      console.log(name, email, password)
       const data = await service.SignUp({ name, email, password, selectedRole });
       return res.status(data.status).json(data);
     } catch (err) {
@@ -33,7 +31,6 @@ module.exports = (app) => {
       const { courseName, date } = req.body;
       const data = await service.CreateEvent({ courseName, date, instructor: req.user._id });
 
-      console.log("courseName, date,token  ", courseName, date)
       return res.status(data.status).json(data)
     } catch (err) {
       next(err);
@@ -42,15 +39,22 @@ module.exports = (app) => {
 
   app.post("/fetchEvents", isAuth, async (req, res, next) => {
     try {
-      console.log("inside fetchEvent")
-      const data = await service.GetEvents(req.body);
-
-      console.log("fetchEvents-user  ",data)
+      console.log("/fetchEvents", req.body, req.user._id)
+      const data = await service.GetEvents(req.body, req.user._id);
       return res.status(data.status).json(data)
     } catch (err) {
       next(err);
     }
   });
 
+
+  app.post("/addBookedEvents", isAuth, async (req, res, next) => {
+    try {
+      const data = await service.AddBookedEvents(req.body.eventId, req.user._id);
+      return res.status(data.status).json(data)
+    } catch (err) {
+      next(err);
+    }
+  });
 
 };

@@ -17,7 +17,13 @@ const userSchema = new Schema({
   selectedRole: {
     type: String,
     required: true,
-  }
+  },
+  // bookedEvents: [{ type: String }]
+  bookedEvents: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "event",
+    required: true,
+  }]
 }, {
   toJSON: {// when the output document convert to the json this transform function will execute
     transform(doc, ret) {
